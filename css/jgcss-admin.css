@@ -1,0 +1,17 @@
+/* Force the textarea to be wide like the page entry textarea */
+.wp-editor-container textarea.wp-editor-area {
+	width: 99.9%;
+	border: none !important;
+}
+
+/* Override CodeMirrors removal of the default WordPress content entry styles */
+div.CodeMirror {
+	border: 1px solid #ccc !important;
+	border-radius: 3px;
+	moz-border-radius: 3px;
+	webkit-border-radius: 3px;
+}
+
+div.CodeMirror-scroll {
+	height: 400px;
+}
