@@ -24,7 +24,7 @@ $options = get_option( 'jgcss_new_stylesheet' );
 
 $title = ($_GET['stylesheet_id'] ? 'Edit Stylesheet' : 'New Stylesheet');
 
-$jgcss_admin_pages->admin_header( $title, false, array('name' => 'stylesheet', 'action' => '/wp-admin/admin.php?page=jgcss_dashboard', 'method' => 'post', 'id' => 'stylesheet') );
+$jgcss_admin_pages->admin_header( $title, false, array('name' => 'stylesheet', 'action' => site_url() . '/wp-admin/admin.php?page=jgcss_dashboard', 'method' => 'post', 'id' => 'stylesheet') );
 
 ?>
 <div id="titlediv">
