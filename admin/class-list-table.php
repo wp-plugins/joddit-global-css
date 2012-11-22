@@ -51,7 +51,6 @@ class JGCSS_List_Table extends WP_List_Table {
 			'cb' => '<input type="checkbox" />',
 			'col_stylesheet_name' => 'Name',
 			'col_stylesheet_author' => 'Author',
-			'col_stylesheet_status' => 'Status',
 			'col_stylesheet_date' => 'Created',
 			'col_stylesheet_modified' => 'Last Modified'
 		);
@@ -120,7 +119,7 @@ class JGCSS_List_Table extends WP_List_Table {
 					$attributes = $class . $style;
 		
 					// edit link
-					$editlink = '/wp-admin/admin.php?page=jgcss_stylesheet&stylesheet_id=' . (int)$record->stylesheet_id;
+					$editlink = site_url() . '/wp-admin/admin.php?page=jgcss_stylesheet&stylesheet_id=' . (int)$record->stylesheet_id;
 					
 					$row_actions = array(
 						'Edit' => '#',
@@ -139,23 +138,16 @@ class JGCSS_List_Table extends WP_List_Table {
 							echo '<td ' . $attributes.'><strong><a href="' . $editlink . '">' . stripslashes($record->stylesheet_name) . '</a></strong>';
 							echo '<div class="row-actions">';
 							echo '<span class="edit">';
-							echo '<a href="/wp-admin/admin.php?page=jgcss_stylesheet&stylesheet_id=' . (int)$record->stylesheet_id . '" title="Edit this item">Edit</a>';
+							echo '<a href="' . site_url()  . '/wp-admin/admin.php?page=jgcss_stylesheet&stylesheet_id=' . (int)$record->stylesheet_id . '" title="Edit this item">Edit</a>';
 							echo ' | ';
 							echo '</span>';
 							echo '<span class="trash">';
-							echo '<a href="/wp-admin/admin.php?page=jgcss_dashboard&stylesheet_id=' . (int)$record->stylesheet_id . '&amp;action=trash" title="Delete this item">Trash</a>';
+							echo '<a href="' . site_url()  . '/wp-admin/admin.php?page=jgcss_dashboard&stylesheet_id=' . (int)$record->stylesheet_id . '&amp;action=trash" title="Delete this item">Trash</a>';
 							echo '</span>';
 							echo '</div></td>';
 							break;
 						case "col_stylesheet_author":
 							echo '<td ' . $attributes . '>' . stripslashes($user_data->data->display_name) . '</td>';
-							break;
-						case "col_stylesheet_status":
-							if($record->stylesheet_status) {
-								echo '<td '.$attributes.'>Active</td>';
-							} else {
-								echo '<td '.$attributes.'>Inctive</td>';
-							} // end if
 							break;
 						case "col_stylesheet_date":
 							echo '<td ' . $attributes . '>' . mysql2date('Y-m-d', $record->stylesheet_date) . '<br />' . mysql2date('g:i:s A', $record->stylesheet_date) . '</td>';

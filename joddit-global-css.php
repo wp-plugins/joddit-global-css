@@ -3,7 +3,7 @@
 Plugin Name: Joddit Global CSS
 Plugin URI: http://www.joddit.com
 Description: Simple Custom CSS in WordPress: Create and manage custom stylesheets with a powerful CSS editor based on the <a href="http://codemirror.net">CodeMirror</a> JavaScript component.
-Version: 0.7.3
+Version: 0.7.6
 Author: Joddit Web Services, LLC
 Author URI: http://www.joddit.com
 License: GPL2
@@ -16,7 +16,7 @@ if ( !defined('JGCSS_PATH') )
 if ( !defined('JGCSS_BASENAME') )
 	define( 'JGCSS_BASENAME', plugin_basename( __FILE__ ) );
 	
-define( 'JGCSS_VERSION', '0.7.3' );
+define( 'JGCSS_VERSION', '0.7.6' );
 
 /**
  * Used to load the required files on the plugins_loaded hook, instead of immediately.
@@ -44,7 +44,7 @@ function jgcss_frontend_init() {
 		$slug = 'jgcss-' . sanitize_title($stylesheet->stylesheet_name);
 		
 		// Enqueue the stylesheet
-		wp_enqueue_style( $slug, $stylesheet->stylesheet_file_path, '', JGCSS_VERSION, 'all' );
+		wp_enqueue_style( $slug, site_url('/') . $stylesheet->stylesheet_file_path, '', JGCSS_VERSION, 'all' );
 	}
 	
 	// Get the author information
@@ -150,12 +150,6 @@ if ( is_admin() ) {
  */
 function create_stylesheet($submitted_data) {
 	
-	/* Debugging
-	print("<pre>");
-	print_r($submitted_data);
-	print("</pre>");
-	*/
-	
 	// Bring wpdb into scope
 	global $wpdb;
 	
@@ -179,12 +173,6 @@ function create_stylesheet($submitted_data) {
 		'stylesheet_date' => current_time( 'mysql' ),
 		'stylesheet_modified' => current_time( 'mysql' )
 	);
-	
-	/* Debugging
-	print("<pre>");
-	print_r($insert_data);
-	print("</pre>");
-	*/
 	
 	// Create an array of insertion formats
 	$insert_formats = array(
@@ -270,7 +258,7 @@ function cache_stylesheet($stylesheet_id) {
 	
 	// Check if a cached version exists. if it does, delete it
 	if($table_name['stylesheet_file_path'] != "") {
-		$file_path = substr(getcwd(), 0, -9) . $stylesheet_data->stylesheet_file_path;
+		$file_path = ABSPATH . $stylesheet_data->stylesheet_file_path;
 		unlink($file_path);
 	}
 	
@@ -278,7 +266,7 @@ function cache_stylesheet($stylesheet_id) {
 	$upload_results = wp_upload_bits( $filename, null, $stylesheet_data->stylesheet_content );
 	
 	// Strip the website from the path and url
-	$upload_results['url'] = str_replace(get_option( 'siteurl' ), '', $upload_results['url']);
+	$upload_path = str_replace(ABSPATH, '', $upload_results['file']);
 	
 	// Correct the stylesheet name if it was left blank
 	if($stylesheet_data->stylesheet_name == 'Unnamed Stylesheet') {
@@ -290,7 +278,7 @@ function cache_stylesheet($stylesheet_id) {
 	// Structure the update data
 	$update_data = array(
 		'stylesheet_name' => $stylesheet_name,
-		'stylesheet_file_path' => $upload_results['url'],
+		'stylesheet_file_path' => $upload_path,
 	);
 	
 	// UPDATE WHERE clause data
