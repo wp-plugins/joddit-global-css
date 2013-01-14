@@ -5,8 +5,8 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: ultimatum, global stylesheet, css, global css, single stylesheet, single css
 Requires at least: 3.0
-Tested up to: 3.4.2
-Stable tag: 0.7.6
+Tested up to: 3.5
+Stable tag: 0.7.7
 
 Simple Custom CSS in WordPress: Create and manage custom stylesheets with a powerful CSS editor based on the CodeMirror JavaScript component.
 
@@ -57,6 +57,10 @@ You can only change the color scheme of the CSS editor by modifying the core plu
 
 * Fixed a small bug whereby the enqueued stylesheet url is missing a front slash.
 
+= 0.7.7 =
+
+* Fixed a small issue regarding stylesheet content and escaping characters.
+
 == Upgrade Notice ==
 
-= It's essential that all users update to avoid the directory structuring bug in 0.7.3  =
+= It's essential that all users update to avoid the escape string issue in 0.7.6  =
