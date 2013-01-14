@@ -34,7 +34,7 @@ $jgcss_admin_pages->admin_header( $title, false, array('name' => 'stylesheet', '
   </div>
 </div>
 <div id="wp-content-editor-container" class="wp-editor-container">
-    <textarea class="wp-editor-area" rows="20" tabindex="1" cols="40" name="content" id="content"><?php echo $stylesheet->stylesheet_content; ?></textarea>
+    <textarea class="wp-editor-area" rows="20" tabindex="1" cols="40" name="content" id="content"><?php echo stripslashes($stylesheet->stylesheet_content); ?></textarea>
 </div>
 <input type="hidden" name="submitted" value="1" />
 <?php
