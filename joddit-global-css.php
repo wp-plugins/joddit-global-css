@@ -3,7 +3,7 @@
 Plugin Name: Joddit Global CSS
 Plugin URI: http://www.joddit.com
 Description: Simple Custom CSS in WordPress: Create and manage custom stylesheets with a powerful CSS editor based on the <a href="http://codemirror.net">CodeMirror</a> JavaScript component.
-Version: 0.7.7
+Version: 0.7.8
 Author: Joddit Web Services, LLC
 Author URI: http://www.joddit.com
 License: GPL2
@@ -16,7 +16,7 @@ if ( !defined('JGCSS_PATH') )
 if ( !defined('JGCSS_BASENAME') )
 	define( 'JGCSS_BASENAME', plugin_basename( __FILE__ ) );
 	
-define( 'JGCSS_VERSION', '0.7.7' );
+define( 'JGCSS_VERSION', '0.7.8' );
 
 /**
  * Used to load the required files on the plugins_loaded hook, instead of immediately.
@@ -72,7 +72,9 @@ function jgcss_admin_init() {
  */
 function jgcss_load_admin_resources() {
 	wp_enqueue_style( 'jgcss-admin', JGCSS_URL . 'css/jgcss-admin.css', '', JGCSS_VERSION, 'all' );
-	wp_enqueue_script( 'jgcss-admin-js', JGCSS_URL . 'js/jgcss-admin-general.js', array( 'jquery' ), JGCSS_VERSION );
+	if($_GET['page'] == 'jgcss_dashboard') {
+		wp_enqueue_script( 'jgcss-admin-js', JGCSS_URL . 'js/jgcss-admin-general.js', array( 'jquery' ), JGCSS_VERSION );
+	}
 	
 	// Includes the CodeMirror syntax highlighter
 	if($_GET['page'] == 'jgcss_dashboard') {
