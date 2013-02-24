@@ -6,7 +6,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: ultimatum, global stylesheet, css, global css, single stylesheet, single css
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 0.7.9
+Stable tag: 0.8.0
 
 Simple Custom CSS in WordPress: Create and manage custom stylesheets with a powerful CSS editor based on the CodeMirror JavaScript component.
 
@@ -65,7 +65,7 @@ You can only change the color scheme of the CSS editor by modifying the core plu
 
 * Fixed a bug where the javascript validation used in the plugin was interfering with other scripts.
 
-= 0.7.9 =
+= 0.8.0 =
 
 * Fixed a bug where the placeholder text in the stylesheet title text field wouldn't disappear when clicked on.
 * Changed the way the save stylesheet button works. It no longer redirects the user back to the stylesheet dashboard. Instead, the save button simply saves the stylesheet and reloads the stylesheet so the user can continue editing. This was a suggestion from the community that we thought made good sense since CSS is an iterative process.
