@@ -72,7 +72,7 @@ function jgcss_admin_init() {
  */
 function jgcss_load_admin_resources() {
 	wp_enqueue_style( 'jgcss-admin', JGCSS_URL . 'css/jgcss-admin.css', '', JGCSS_VERSION, 'all' );
-	if($_GET['page'] == 'jgcss_dashboard') {
+	if($_GET['page'] == 'jgcss_dashboard' || $_GET['page'] == 'jgcss_stylesheet') {
 		wp_enqueue_script( 'jgcss-admin-js', JGCSS_URL . 'js/jgcss-admin-general.js', array( 'jquery' ), JGCSS_VERSION );
 	}
 	
@@ -192,6 +192,9 @@ function create_stylesheet($submitted_data) {
 	// Update the stylesheets cache file
 	cache_stylesheet($wpdb->insert_id);
 	
+	// Redirect the user back to the current stylesheet
+	wp_redirect(site_url() . '/wp-admin/admin.php?page=jgcss_stylesheet&stylesheet_id=' . $wpdb->insert_id . "&message=created");
+	
 }
 
 /**
@@ -223,6 +226,9 @@ function update_stylesheet($submitted_data) {
 	
 	// Update the stylesheets cache file
 	cache_stylesheet($submitted_data['stylesheet_id']);
+	
+	// Redirect the user back to the current stylesheet
+	wp_redirect(site_url() . '/wp-admin/admin.php?page=jgcss_stylesheet&stylesheet_id=' . $submitted_data['stylesheet_id'] . "&message=updated");
 	
 }
 

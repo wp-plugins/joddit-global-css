@@ -49,6 +49,11 @@ class JGCSS_Admin_Pages {
 		<div class="wrap">
             <div id="joddit-icon" style="background: url('<?php echo JGCSS_URL; ?>images/jwp-32x32.png') no-repeat;" class="icon32"><br /></div>
             <h2 id="jgcss-title">Joddit Global CSS: <?php echo $title; ?><?php if(is_array($header_button)) { ?> <a href="<?php echo $header_button['url'] ?>" class="add-new-h2"><?php echo $header_button['label'] ?></a><?php } ?></h2>
+    		<?php if($_GET['message'] == 'created') { ?>
+			<div id="message" class="updated below-h2"><p>Your new stylesheet has been created and saved successfully.</p></div>
+            <?php } else if($_GET['message'] == 'updated') { ?>
+			<div id="message" class="updated below-h2"><p>Your stylesheet has been updated and saved successfully.</p></div>
+            <?php } // end if ?>
             <div id="jgcss_content_top">
                 <div class="metabox-holder">	
                     <div class="meta-box-sortables">
