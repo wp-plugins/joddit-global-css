@@ -6,7 +6,7 @@
 /**
  * Class that lists the currently available stylesheets
  */
-class JGCSS_List_Table extends WP_List_Table {
+class JGCSS_List_Table extends WP_List_Table_3_9_3 {
 	
 	/**
 	 * Constructor, we override the parent to pass our own arguments
@@ -17,9 +17,10 @@ class JGCSS_List_Table extends WP_List_Table {
 		 	array(
 				'singular'=> 'jgcss_stylesheets', // Singular label
 				'plural' => 'jgcss_stylesheet', // plural label, also this well be one of the table css class
-				'ajax'	=> false // We won't support Ajax for this table
+				'ajax'	=> false, // We won't support Ajax for this table
 			) // end array
 		); // end parent::__construct()
+
 	 } // end __construct()
 	 
 	/**
