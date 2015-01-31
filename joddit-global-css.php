@@ -3,7 +3,7 @@
 Plugin Name: Joddit Global CSS
 Plugin URI: http://www.joddit.com
 Description: Simple Custom CSS in WordPress: Create and manage custom stylesheets with a powerful CSS editor based on the <a href="http://codemirror.net">CodeMirror</a> JavaScript component.
-Version: 0.8.0
+Version: 1.0.1
 Author: Joddit Web Services, LLC
 Author URI: http://www.joddit.com
 License: GPL2
@@ -16,7 +16,7 @@ if ( !defined('JGCSS_PATH') )
 if ( !defined('JGCSS_BASENAME') )
 	define( 'JGCSS_BASENAME', plugin_basename( __FILE__ ) );
 	
-define( 'JGCSS_VERSION', '0.8.0' );
+define( 'JGCSS_VERSION', '1.0.1' );
 
 /**
  * Used to load the required files on the plugins_loaded hook, instead of immediately.
@@ -57,11 +57,10 @@ function jgcss_frontend_init() {
  */
 function jgcss_admin_init() {
 	
-	// Our class extends the WP_List_Table class, so we need to make sure that it's there
-	if(!class_exists('WP_List_Table')){
-		require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
-	}
+	// Include our own custom WP_List_Table from WordPress release 3.9.3
+	require_once( JGCSS_PATH . 'includes/class-wp-list-table-3-9-3.php');
 	
+	// Include other init related includes
 	require_once( JGCSS_PATH . 'admin/class-admin.php' );
 	require_once( JGCSS_PATH . 'admin/class-config.php' );
 	require_once( JGCSS_PATH . 'admin/class-list-table.php' );
@@ -83,9 +82,11 @@ function jgcss_load_admin_resources() {
 		} elseif($_GET['stylesheet_id'] && $_GET['action'] == 'trash') {
 			delete_stylesheet($_GET['stylesheet_id']);
 		} elseif($_GET['bulkaction'] && $_POST['action'] == 'delete') {
-			foreach($_POST['stylesheet'] as $stylesheet_id) {
-				delete_stylesheet($stylesheet_id);
-			}
+			if (is_array($_POST['stylesheet'])) {
+				foreach($_POST['stylesheet'] as $stylesheet_id) {
+					delete_stylesheet($stylesheet_id);
+				} // end foreach
+			} // end if
 		} elseif($_POST['submitted']) {
 			create_stylesheet($_POST);
 		}
@@ -93,11 +94,11 @@ function jgcss_load_admin_resources() {
 	
 	// Includes the CodeMirror syntax highlighter
 	if($_GET['page'] == 'jgcss_stylesheet') {
-		wp_enqueue_style( 'jgcss-admin-codemirror', JGCSS_URL . '/lib/codemirror-2.35/lib/codemirror.css', '', '2.35', 'all' );
-		wp_enqueue_script( 'jgcss-admin-codemirror', JGCSS_URL . '/lib/codemirror-2.35/lib/codemirror.js', array( 'jquery' ), '2.35' );
-		wp_enqueue_script( 'jgcss-admin-codemirror-mode', JGCSS_URL . '/lib/codemirror-2.35/mode/css/css.js', array( 'jgcss-admin-codemirror' ), '2.35' );
+		wp_enqueue_style( 'jgcss-admin-codemirror', JGCSS_URL . '/lib/codemirror-4.12/lib/codemirror.css', '', '4.12', 'all' );
+		wp_enqueue_script( 'jgcss-admin-codemirror', JGCSS_URL . '/lib/codemirror-4.12/lib/codemirror.js', array( 'jquery' ), '4.12' );
+		wp_enqueue_script( 'jgcss-admin-codemirror-mode', JGCSS_URL . '/lib/codemirror-4.12/mode/css/css.js', array( 'jgcss-admin-codemirror' ), '4.12' );
 		wp_enqueue_script( 'jgcss-admin-codemirror-instance', JGCSS_URL . 'js/jgcss-admin-codemirror.js', array( 'jgcss-admin-codemirror-mode' ), JGCSS_VERSION );
-		wp_enqueue_style( 'jgcss-admin-codemirror-eclipse-theme', JGCSS_URL . '/lib/codemirror-2.35/theme/eclipse.css', '', '2.35', 'all' );
+		wp_enqueue_style( 'jgcss-admin-codemirror-eclipse-theme', JGCSS_URL . '/lib/codemirror-4.12/theme/eclipse.css', '', '4.12', 'all' );
 		
 	}
 }
@@ -192,9 +193,6 @@ function create_stylesheet($submitted_data) {
 	// Update the stylesheets cache file
 	cache_stylesheet($wpdb->insert_id);
 	
-	// Redirect the user back to the current stylesheet
-	wp_redirect(site_url() . '/wp-admin/admin.php?page=jgcss_stylesheet&stylesheet_id=' . $wpdb->insert_id . "&message=created");
-	
 }
 
 /**
@@ -226,9 +224,6 @@ function update_stylesheet($submitted_data) {
 	
 	// Update the stylesheets cache file
 	cache_stylesheet($submitted_data['stylesheet_id']);
-	
-	// Redirect the user back to the current stylesheet
-	wp_redirect(site_url() . '/wp-admin/admin.php?page=jgcss_stylesheet&stylesheet_id=' . $submitted_data['stylesheet_id'] . "&message=updated");
 	
 }
 
@@ -265,9 +260,9 @@ function cache_stylesheet($stylesheet_id) {
 	$filename = md5(implode("-", $filename_pieces)) . '.css';
 	
 	// Check if a cached version exists. if it does, delete it
-	if($table_name['stylesheet_file_path'] != "") {
+	if($stylesheet_data->stylesheet_file_path != "") {
 		$file_path = ABSPATH . $stylesheet_data->stylesheet_file_path;
-		unlink($file_path);
+		((unlink($file_path)));
 	}
 	
 	// Save the file and update the path in the database
@@ -347,7 +342,7 @@ function delete_cache_stylesheet($stylesheet_id) {
 	$stylesheet_data = $wpdb->get_row($query);
 	
 	// Delete the file
-	$file_path = substr(getcwd(), 0, -9) . $stylesheet_data->stylesheet_file_path;
+	$file_path = substr(getcwd(), 0, -8) . $stylesheet_data->stylesheet_file_path;
 	unlink($file_path);
 	
 }
