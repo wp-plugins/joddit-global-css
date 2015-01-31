@@ -4,14 +4,23 @@
 	border: none !important;
 }
 
-/* Override CodeMirrors removal of the default WordPress content entry styles */
-div.CodeMirror {
-	border: 1px solid #ccc !important;
-	border-radius: 3px;
-	moz-border-radius: 3px;
-	webkit-border-radius: 3px;
+#stylesheet #titlediv {
+	margin-bottom: 15px;
 }
 
+.wrap .icon32 {
+	display: block;
+	float: left;
+	width: 32px;
+	height: 32px;
+	margin-top: 8px;
+}
+
+.wrap #jgcss-title {
+	padding-left: 45px;
+}
+
+/* Override CodeMirrors removal of the default WordPress content entry styles */
 div.CodeMirror-scroll {
 	height: 400px;
 }
