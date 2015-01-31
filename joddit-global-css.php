@@ -3,7 +3,7 @@
 Plugin Name: Joddit Global CSS
 Plugin URI: http://www.joddit.com
 Description: Simple Custom CSS in WordPress: Create and manage custom stylesheets with a powerful CSS editor based on the <a href="http://codemirror.net">CodeMirror</a> JavaScript component.
-Version: 0.9.9
+Version: 1.0.1
 Author: Joddit Web Services, LLC
 Author URI: http://www.joddit.com
 License: GPL2
@@ -16,7 +16,7 @@ if ( !defined('JGCSS_PATH') )
 if ( !defined('JGCSS_BASENAME') )
 	define( 'JGCSS_BASENAME', plugin_basename( __FILE__ ) );
 	
-define( 'JGCSS_VERSION', '0.9.9' );
+define( 'JGCSS_VERSION', '1.0.1' );
 
 /**
  * Used to load the required files on the plugins_loaded hook, instead of immediately.
@@ -193,9 +193,6 @@ function create_stylesheet($submitted_data) {
 	// Update the stylesheets cache file
 	cache_stylesheet($wpdb->insert_id);
 	
-	// Redirect the user back to the current stylesheet
-	wp_redirect(site_url() . '/wp-admin/admin.php?page=jgcss_stylesheet&stylesheet_id=' . $wpdb->insert_id . "&message=created");
-	
 }
 
 /**
@@ -227,9 +224,6 @@ function update_stylesheet($submitted_data) {
 	
 	// Update the stylesheets cache file
 	cache_stylesheet($submitted_data['stylesheet_id']);
-	
-	// Redirect the user back to the current stylesheet
-	wp_redirect(site_url() . '/wp-admin/admin.php?page=jgcss_stylesheet&stylesheet_id=' . $submitted_data['stylesheet_id'] . "&message=updated");
 	
 }
 
