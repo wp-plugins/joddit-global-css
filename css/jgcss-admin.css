@@ -20,7 +20,7 @@
 	padding-left: 45px;
 }
 
-/* Override CodeMirrors removal of the default WordPress content entry styles */
-div.CodeMirror-scroll {
-	height: 400px;
+.CodeMirror {
+  /* Set height, width, borders, and global font properties here */
+  height: 500px !important;
 }

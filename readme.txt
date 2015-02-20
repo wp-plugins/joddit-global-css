@@ -6,7 +6,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: ultimatum, global stylesheet, css, global css, single stylesheet, single css
 Requires at least: 3.0
 Tested up to: 4.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 
 Simple Custom CSS in WordPress: Create and manage custom stylesheets with a powerful CSS editor based on the CodeMirror JavaScript component.
 
@@ -83,6 +83,10 @@ You can only change the color scheme of the CSS editor by modifying the core plu
 
 * Fixed a redirection bug that was throwing php warnings.
 
+= 1.0.2 =
+
+* Increased the height of the stylesheet editor container per community request.
+
 == Upgrade Notice ==
 
-= We highly recommend updating from 1.0.1 for compatibility with WordPress 4.x =
+= We highly recommend updating from 1.0.2 for compatibility with WordPress 4.x =
